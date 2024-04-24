@@ -1,3 +1,4 @@
+import { useJsApiLoader } from '@react-google-maps/api';
 import MapContainer from './MapContainer';
 
 function App() {
@@ -10,12 +11,18 @@ function App() {
     { lat: -1.9487480402200394, lng: 30.126596781356923 }, // Stop E
     { lat: -1.9365670876910166, lng: 30.13020167024439 }, // Kimironko
   ];
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY || '',
+    libraries: ['places'],
+  });
   return (
     <div>
       <h2>Nyabugogo - Kimironko</h2>
       <p>Next stop: Kacyiru Bus Park</p>
-      <p>Distance: 23Km </p>
-      <MapContainer stops={stops} />
+      <p>Distance: 23Km</p>
+      <p>Time: 23 minutes</p>
+      {isLoaded && <MapContainer stops={stops} />}
     </div>
   );
 }
